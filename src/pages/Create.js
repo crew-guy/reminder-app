@@ -10,9 +10,12 @@ import FormLabel from '@material-ui/core/FormLabel'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
+import {useHistory} from 'react-router-dom'
 
 export default function Create()
 {
+  const history = useHistory()
+
   const useStyles = makeStyles({
     field: {
       marginTop: 20,
@@ -50,6 +53,9 @@ export default function Create()
       body:JSON.stringify({title, details, category})
     })
     console.log(request)
+    setTitle('')
+    setDetails('')
+    history.push('/')
   }
 
   return (

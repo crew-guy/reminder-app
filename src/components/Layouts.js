@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core'
+import { Avatar, makeStyles } from '@material-ui/core'
 import React from 'react'
 import Drawer from '@material-ui/core/Drawer'
 import Typography from '@material-ui/core/Typography'
@@ -8,7 +8,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import { AddCircleRounded, Apps } from '@material-ui/icons'
 import { useHistory, useLocation } from 'react-router-dom'
-
+import {format } from 'date-fns'
+import AppBar from '@material-ui/core/AppBar'
+import ToolBar from '@material-ui/core/Toolbar'
 
 const drawerWidth = 240
 
@@ -48,7 +50,11 @@ const useStyles = makeStyles((theme) =>
             },
             title: {
                 padding:theme.spacing(2)
-            }
+            },
+            appbar:{
+                width : `calc(100% - ${drawerWidth}px)`
+            },
+            toolbar:theme.mixins.toolbar
         }
     )
 })
@@ -60,6 +66,22 @@ const Layouts = ({children}) => {
 
     return (
         <div className={classes.root} >
+            
+            <AppBar className={classes.appbar} >
+                <ToolBar style ={{display:'flex', justifyContent:'space-between'}}  >
+                    <Typography>
+                        Today is the {format(new Date(), 'do MMMM Y')}
+                    </Typography>
+                    <Typography style={{display:'flex', alignItems:'center'}}
+                    >
+                    Ankit
+                    <Avatar style={{marginLeft:'1rem'}} >
+                        <img src="https://picsum.photos/200/300" alt="giuy"/>
+                    </Avatar>
+                    </Typography>
+                </ToolBar>
+            </AppBar>
+            
             <Drawer
                 className={classes.drawer}
                 anchor='left'
@@ -86,6 +108,7 @@ const Layouts = ({children}) => {
             </Drawer>
 
             <div className={classes.pages}>
+                <div className={classes.toolbar} ></div>
                 {children}
             </div>
         </div>

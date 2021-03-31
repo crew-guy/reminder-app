@@ -4,9 +4,14 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {makeStyles} from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
+import Avatar from '@material-ui/core/Avatar'
+import {green, red, blue, purple, grey} from '@material-ui/core/colors'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) =>
+
+{
+    return({
     test: {
         border: (note) =>
         {
@@ -23,9 +28,28 @@ const useStyles = makeStyles({
                 default:
                     return `1px solid black`
             }   
+        },
+    },
+    avatar: {
+        background: (note)=>{
+            switch (note.category)
+            {
+                case ('money'):
+                    return green[700]
+                case ('work'):
+                    return red[500]
+                case ('reminders'):
+                    return purple[500]
+                case ('todo'):
+                    return blue[500]
+                default:
+                    return grey[700]
+            }
         }
-    }
+    },
 })
+}    
+)
 
 const NoteCard = ({ note, handleDelete }) =>
 {
@@ -33,18 +57,25 @@ const NoteCard = ({ note, handleDelete }) =>
     return (
         <Card className={classes.test} >
             <CardHeader
+                avatar={
+                    <Avatar className={classes.avatar} >
+                        {note.category.substring(0,1).toUpperCase()}
+                    </Avatar>        
+                }
                 action={
-                <IconButton aria-label="settings">
+                    <IconButton aria-label="settings">
                   <DeleteIcon  onClick={()=>handleDelete(note.id)} />
-                </IconButton>
+                  </IconButton>
                 }
                 title={note.title}
                 subheader={note.category}
-            >
+                >
             </CardHeader>
-            <CardContent>
-                {note.details}
-            </CardContent>
+            <Typography>
+                <CardContent>
+                    {note.details}
+                </CardContent>
+            </Typography>
         </Card>
     )
 }
